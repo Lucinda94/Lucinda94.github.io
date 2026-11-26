@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Connect car</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f6f4f0;
+      color: #1c1917;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    main {
+      width: 100%;
+      max-width: 28rem;
+    }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+    p {
+      margin: 0 0 1.25rem;
+      line-height: 1.45;
+      color: #44403c;
+    }
+    label {
+      display: block;
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      min-height: 48px;
+      margin: 0 0 1rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid #d6d3d1;
+      border-radius: 12px;
+      background: #fff;
+      font: inherit;
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #1c1917;
+    }
+    input:focus {
+      outline: 2px solid #1c1917;
+      outline-offset: 2px;
+    }
+    button {
+      appearance: none;
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 12px;
+      background: #1c1917;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 0.85rem 1rem;
+    }
+    button:active { opacity: 0.85; }
+    .status {
+      min-height: 1.5rem;
+      margin-top: 0.85rem;
+      font-size: 0.95rem;
+      color: #44403c;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Connect car</h1>
+    <p>Enter the Client ID, then continue to sign in.</p>
+    <form id="start">
+      <label for="client-id">Client ID</label>
+      <input id="client-id" name="client_id" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" required>
+      <button type="submit">Continue to sign in</button>
+      <p class="status" id="status" role="status"></p>
+    </form>
+  </main>
+  <script>
+    (function () {
+      var form = document.getElementById("start");
+      var input = document.getElementById("client-id");
+      var status = document.getElementById("status");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var clientId = input.value.trim();
+        if (!clientId) {
+          status.textContent = "Enter a Client ID to continue.";
+          input.focus();
+          return;
+        }
+        window.location.href = "https://auth.tesla.com/oauth2/v3/authorize?response_type=code&client_id=" + encodeURIComponent(clientId) + "&redirect_uri=" + encodeURIComponent("https://lucinda94.github.io/callback.html") + "&scope=" + encodeURIComponent("openid offline_access vehicle_device_data vehicle_cmds vehicle_location") + "&state=nori2026&locale=en-GB";
+      });
+    })();
+  </script>
+</body>
+</html>
